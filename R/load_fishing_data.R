@@ -1,6 +1,7 @@
 load_fishing_data <- function() {
   
   #Fishing fleet complete
+  #Download from european fleet registry
   fishing_fleet_complete<- read_rds("data/clean_fleet_register_20230626.rds") %>%
     distinct(mmsi, .keep_all = T) 
   
@@ -15,6 +16,7 @@ load_fishing_data <- function() {
   save(fishing_fleet_full, file = "output/fishing_fleet_full.Rdata")
   
   #Global fishing watch fishing fleet
+  #Download from Global fishing watch
   fishing_fleet_gfw <- read.csv("data/fishing_vessels_v2.csv") %>%
     dplyr::select(mmsi, flag_registry, vessel_class_registry, length_m_registry, engine_power_kw_registry, tonnage_gt_registry) %>%
     dplyr::mutate(mmsi = as.factor(mmsi),
@@ -24,6 +26,7 @@ load_fishing_data <- function() {
   save(fishing_fleet_gfw, file = "output/fishing_fleet_gfw.Rdata")
 
   # Loading fishing effort
+  #Download from Global fishing watch
   fishing_effort <- list.files(path = "data/fishing_effort/2023",
                                pattern="*.csv",
                                full.names = T) %>%
